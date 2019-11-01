@@ -1,0 +1,21 @@
+$post->tags()->attach($tag or id or arrOfIds);
+$tag->posts()->attach($post or id or arrOfIds);
+
+$post->tags()->detach($tag or id or arrOfIds);
+$tag->posts()->detach($post or id or arrOfIds);
+
+$post->tags;
+select name from tags inner join post_tag on tags.id = post_tag.tag_id where post_tag.post_id = 1;
+
+get first tag name:
+select name from tags inner join post_tag on tags.id = post_tag.tag_id where post_tag.post_id = 1 limit 1;
+
+$tag->posts;
+select title from posts inner join post_tag on posts.id = post_tag.post_id where post_tag.tag_id =1;
+
+pivot table structure:
+$table->primary(['post_id', 'tag_id']);
+$table->unsignedBigInteger('post_id');
+$table->unsignedBigInteger('tag_id');
+$table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+$table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');

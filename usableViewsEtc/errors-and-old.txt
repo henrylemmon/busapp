@@ -1,0 +1,8 @@
+@error('title') error-input @enderror
+
+
+@error('title')
+<span class="error-text -mt-4" role="alert">
+            <strong>{{ $message }}</strong>
+        </span><br>
+@enderror
