@@ -1,0 +1,12 @@
+[
+    'first_name' => 'Henry',
+    'last_name' => 'Lemmon',
+    'telephone' => '5626682852',
+    'email' => 'henrylemmon@icloud.com',
+
+    'address' => '6018 Gifford Ave.',
+    'address2' => 'Apt. D',
+    'city' => 'Huntington Park',
+    'state' => 'CA.',
+    'zip' => '90255'
+]

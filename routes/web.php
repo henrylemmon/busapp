@@ -1,20 +1,30 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware' => 'auth'], function () {
+    /*Route::get('/customers', 'CustomersController@index');
+    Route::get('/customers/create', 'CustomersController@create');
+    Route::get('/customers/{customer}', 'CustomersController@show');
+    Route::get('/customers/{customer}/edit', 'CustomersController@edit');
+    Route::patch('/customers/{customer}', 'CustomersController@update');
+    Route::post('/customers', 'CustomersController@store');
+    Route::delete('/customers/{customer}', 'CustomersController@destroy');*/
+
+    Route::resource('/customers', 'CustomersController');
+
+    Route::get('/customers/{customer}/addresses', 'CustomerAddressesController@index');
+    Route::get('/customers/{customer}/addresses/create', 'CustomerAddressesController@create');
+    Route::get('/customers/{customer}/addresses/{address}/edit', 'CustomerAddressesController@edit');
+    Route::patch('/customers/{customer}/addresses/{address}', 'CustomerAddressesController@update');
+    Route::post('/customers/{customer}/addresses', 'CustomerAddressesController@store');
+    Route::delete('/customers/{customer}/addresses/{address}', 'CustomerAddressesController@destroy');
+
+    Route::get('/home', 'HomeController@index')->name('home');
+});
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
