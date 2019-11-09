@@ -32,4 +32,14 @@ class Customer extends Model
     {
         return $this->addresses()->where('billing_address', true)->first();
     }
+
+    public function jobAddress($id)
+    {
+        return $this->addresses()->where('id', $id)->first();
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

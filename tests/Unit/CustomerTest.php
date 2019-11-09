@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Address;
 use App\Customer;
+use App\Invoice;
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -63,5 +64,41 @@ class CustomerTest extends TestCase
             ]);
 
         $this->assertInstanceOf(Address::class, $customer->billingAddress());
+    }
+
+    /** @test */
+    public function it_has_a_job_address()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $billingAddress = factory(Address::class)
+            ->states('isBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $invoice = factory(Invoice::class)->create([
+            'customer_id' => $customer->id,
+            'billing_address_id' => $billingAddress->id,
+            'job_address_id' => $jobAddress->id,
+        ]);
+
+        $this->assertInstanceOf(
+            Address::class, $customer->jobAddress($invoice->job_address_id)
+        );
+    }
+
+    /** @test */
+    public function it_has_invoices()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $this->assertInstanceOf(Collection::class, $customer->invoices);
     }
 }

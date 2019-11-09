@@ -5,7 +5,9 @@
         <div class="flex items-end mt-4">
             <div class="mr-6">
                 {{ $address->address }}<br>
-                {{ $address->address2 }}<br>
+                @isset($address->address2)
+                    {{ $address->address2 }}<br>
+                @endisset
                 {{ $address->city . ' ' . $address->state }}<br>
                 {{ $address->zip }}<br>
             </div>

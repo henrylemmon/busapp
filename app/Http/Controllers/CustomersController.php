@@ -117,13 +117,10 @@ class CustomersController extends Controller
 
     public function changeBillingAddress($customer, $id)
     {
-        /*if ($customer->billingAddress()) {
-            $customer->billingAddress()
-                ->update(['billing_address' => false]);
-        }*/
-
+        if ($customer->billingAddress()) {
         $customer->billingAddress()
-            ->update(['billing_address' => false]) ?: null;
+            ->update(['billing_address' => false]);
+    }
 
         $customer->addresses()
             ->where('id', $id)

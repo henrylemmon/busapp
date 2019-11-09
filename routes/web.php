@@ -25,6 +25,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 });
 
+Route::get('/customers/{customer}/invoices', 'InvoicesController@index');
+Route::get('/customers/{customer}/invoices/create', 'InvoicesController@create');
+Route::get('/customers/{customer}/invoices/{invoice}', 'InvoicesController@show');
+Route::post('/customers/{customer}/invoices', 'InvoicesController@store');
+
 Auth::routes();
 
 

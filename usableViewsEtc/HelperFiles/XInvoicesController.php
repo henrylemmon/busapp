@@ -8,7 +8,7 @@ use App\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class InvoicesController extends Controller
+class XInvoicesController extends Controller
 {
     /**
      * Display a listing of the resource.

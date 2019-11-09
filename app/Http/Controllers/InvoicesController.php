@@ -18,22 +18,18 @@ class InvoicesController extends Controller
      */
     public function index(Customer $customer)
     {
-        $pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer'))
-            ->setPaper('letter', 'portrait');
-
-        return $pdf->stream('invoice.pdf');
+        return view('invoices.index', compact('customer'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @param Customer $customer
-     * @param Address $address
      * @return Response
      */
-    public function create(Customer $customer, Address $address)
+    public function create(Customer $customer)
     {
-        return view('invoices.create', compact('customer', 'address'));
+        return view('invoices.create', compact('customer'));
     }
 
     /**
@@ -43,34 +39,57 @@ class InvoicesController extends Controller
      * @param Address $address
      * @return void
      */
-    public function store(Customer $customer, Address $address)
+    public function store(Customer $customer)
     {
-        $invoice = [
-            'customer_id' => $customer->id,
-            'address_id' => $address->id,
+        $attributes = [
+            'billing_address_id' => $customer->billingAddress()->id,
+            'job_address_id' => request('job_address_id'),
+            'sales_person' => request('sales_person'),
+            'billing_date' => request('billing_date'),
             'description' => request('description'),
             'cost_description' => request('cost_description'),
-            'cost' => request('cost')
+            'completed' => request('completed') ? true : false,
+            'paid' => request('paid') ? true : false,
+            'total' => request('total')
         ];
 
-        Invoice::create($invoice);
+        $customer->invoices()->create($attributes);
+
+        return redirect($customer->path() . '/invoices');
     }
+    /*
+'billing_address_id'
+'job_address_id'
+'sales_person', 25
+'date', 15
+'description', 300
+'cost_description', 100
+'completed', bool
+'paid', bool
+'cost', 10
+*/
 
     /**
      * Display the specified resource in PDF format.
      *
      * @param Customer $customer
-     * @param Address $address
      * @param Invoice $invoice
-     * @return Response
+     * @return void
      */
-    public function show(Customer $customer, Address $address, Invoice $invoice)
+    public function show(Customer $customer, Invoice $invoice)
     {
-        $pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer', 'address'))
-            ->setPaper('letter', 'portrait');
-
-        return $pdf->stream('invoice.pdf');
+        return view('invoices.show', compact('invoice'));
     }
+
+/*$pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer', 'address'))
+->setPaper('letter', 'portrait');
+
+return $pdf->stream('invoice.pdf');*/
+
+/*$pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer'))
+->setPaper('letter', 'portrait');
+
+return $pdf->stream('invoice.pdf');*/
 
     /**
      * Show the form for editing the specified resource.

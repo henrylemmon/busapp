@@ -138,33 +138,19 @@
         <td class="middle">Hank</td>
         @isset($address)
             <td class="middle">
-                {{ $address['job_address'] }}<br>
-                {{ $address['job_address2'] }}<br>
-                {{ $address['city'] . ',' }}
-                {{ $address['state'] . '.' }}<br>
-                {{ $address['zip'] }}<br>
+                Henry
             </td>
         @endisset
         @empty($address)
             <td class="middle">
-                {{ $customer['billing_address'] }}<br>
-                {{ $customer['billing_address2'] }}<br>
-                {{ $customer['city'] . ',' }}
-                {{ $customer['state'] . '.' }}<br>
-                {{ $customer['zip'] }}<br>
+                Job Location
             </td>
         @endempty
         <td class="middle">
-            {{ $customer['first_name'] }}
-            {{ $customer['last_name'] }}<br>
-            {{ $customer['billing_address'] }}<br>
-            {{ $customer['billing_address2'] }}<br>
-            {{ $customer['city'] . ',' }}
-            {{ $customer['state'] . '.' }}<br>
-            {{ $customer['zip'] }}<br>
+            Billing Address
         </td>
         <td class="middle">
-            {{ Carbon\Carbon::now()->isoFormat('MM/DD/YYYY') }}
+            The Date
         </td>
     </tr>
 </table>

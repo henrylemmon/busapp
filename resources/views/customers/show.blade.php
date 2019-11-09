@@ -27,7 +27,9 @@
                 @isset($customer->billingAddress()->address)
                     <div>
                         {{ $customer->billingAddress()->address }}<br>
-                        {{ $customer->billingAddress()->address2 }}<br>
+                        @isset($customer->billingAddress()->address2)
+                            {{ $customer->billingAddress()->address2 }}<br>
+                        @endisset
                         {{ $customer->billingAddress()->city }}
                         {{ $customer->billingAddress()->state }}<br>
                         {{ $customer->billingAddress()->zip }}<br>
@@ -48,7 +50,9 @@
                     @foreach($customer->addresses as $address)
                         <div class="mt-4">
                             {{ $address->address }}<br>
-                            {{ $address->address2 }}<br>
+                            @isset($address->address2)
+                                {{ $address->address2 }}<br>
+                            @endisset
                             {{ $address->city . ' ' . $address->state }}<br>
                             {{ $address->zip }}<br>
                             <hr class="border-gray-500 mt-4">
@@ -105,12 +109,12 @@
                 <div class="text-2xl mt-8 mb-0 font-bold text-center">Manage Invoices</div>
                 <hr class="border-gray-500">
                 <a
-                    href="#"
+                    href="{{ $customer->path() . '/invoices' }}"
                     class="button block text-center mt-4"
                 >View Customer Invoices</a>
 
                 <a
-                    href="#"
+                    href="{{ $customer->path() . '/invoices/create' }}"
                     class="button block text-center mt-4"
                 >Create Customer Invoice</a>
             </div>

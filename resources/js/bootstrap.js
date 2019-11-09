@@ -6,6 +6,8 @@ window._ = require('lodash');
  * code may be modified to fit the specific needs of your application.
  */
 
+window.ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
+
 /*try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');

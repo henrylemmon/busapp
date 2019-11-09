@@ -165,7 +165,7 @@ class ManageCustomerAddressesTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_change_billing_address()
+    public function a_user_can_change_customers_billing_address()
     {
         $customer = factory(Customer::class)->create();
 
