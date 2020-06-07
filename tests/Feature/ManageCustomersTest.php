@@ -298,12 +298,11 @@ class ManageCustomersTest extends TestCase
     }
 
     /** @test */
-    public function a_customer_requires_an_address()
+    public function a_customer_requires_address()
     {
         $customer = factory(Customer::class)->raw();
         $address = factory(Address::class)->raw([
-            'address' => '',
-            'address2' => ''
+            'address' => ''
         ]);
         $newCustomer = array_merge($customer, $address);
 

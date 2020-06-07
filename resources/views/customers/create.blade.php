@@ -19,6 +19,8 @@
                         type="text"
                         id="first_name"
                         value="{{ old('first_name') }}"
+                        maxlength="50"
+                        required
                         class="form-input @error('first_name') error-input @enderror"
                     >
                     @error('first_name')
@@ -37,6 +39,8 @@
                         type="text"
                         id="last_name"
                         value="{{ old('last_name') }}"
+                        maxlength="50"
+                        required
                         class="form-input @error('last_name') error-input @enderror"
                     >
                     @error('last_name')
@@ -55,6 +59,8 @@
                         type="text"
                         id="telephone"
                         value="{{ old('telephone') }}"
+                        maxlength="25"
+                        required
                         class="form-input @error('telephone') error-input @enderror"
                     >
                     @error('telephone')
@@ -73,6 +79,7 @@
                         type="email"
                         id="email"
                         value="{{ old('email') }}"
+                        maxlength="50"
                         class="form-input @error('email') error-input @enderror"
                     >
                     @error('email')
@@ -91,6 +98,8 @@
                         type="text"
                         id="address"
                         value="{{ old('address') }}"
+                        required
+                        maxlength="35"
                         class="form-input @error('address') error-input @enderror"
                     >
                     @error('address')
@@ -109,6 +118,7 @@
                         type="text"
                         id="address2"
                         value="{{ old('address2') }}"
+                        maxlength="20"
                         class="form-input @error('address2') error-input @enderror"
                     >
                     @error('address2')
@@ -127,6 +137,8 @@
                         type="text"
                         id="city"
                         value="{{ old('city') }}"
+                        required
+                        maxlength="25"
                         class="form-input @error('city') error-input @enderror"
                     >
                     @error('city')
@@ -145,6 +157,8 @@
                         type="text"
                         id="state"
                         value="{{ old('state') }}"
+                        required
+                        maxlength="2"
                         class="form-input @error('state') error-input @enderror"
                     >
                     @error('state')
@@ -163,6 +177,7 @@
                         type="text"
                         id="zip"
                         value="{{ old('zip') }}"
+                        maxlength="20"
                         class="form-input @error('zip') error-input @enderror"
                     >
                     @error('zip')
