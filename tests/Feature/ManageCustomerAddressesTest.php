@@ -221,4 +221,128 @@ class ManageCustomerAddressesTest extends TestCase
 
         $this->assertEquals(0, $customer->addresses->count());
     }
+
+    // validation
+
+    /** @test */
+    public function adding_address_to_existing_customer_requires_the_address_field()
+    {
+        /*$this->withoutExceptionHandling();*/
+
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'address' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('address');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_address_cannot_be_more_than_35_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'address' => 'lllllllllllllllllllllllllllllllllllX',
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('address');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_requires_the_address2_cannot_be_more_than_20_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'address2' => 'llllllllllllllllllllX'
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('address2');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_requires_a_city()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'city' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('city');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_city_cannot_be_more_than_25_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'city' => 'lllllllllllllllllllllllllX'
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('city');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_requires_a_state()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'state' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('state');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_state_cannot_be_more_than_2_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'state' => 'CAX'
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('state');
+    }
+
+
+    /** @test */
+    public function adding_address_to_existing_customer_zip_cannot_be_more_than_20_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $address = factory(Address::class)->raw([
+            'zip' => 'llllllllllllllllllllX'
+        ]);
+
+        $this->signIn();
+
+        $this->post($customer->path().'/addresses', $address)
+            ->assertSessionHasErrors('zip');
+    }
+
 }

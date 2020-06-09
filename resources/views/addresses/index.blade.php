@@ -41,5 +41,6 @@
         <hr class="border-gray-500 mt-4">
     @empty
         Need To Add An Address!
+        <a href="{{ $customer->path() }}" class="button">Back To Manage Customers</a>
     @endforelse
 @endsection

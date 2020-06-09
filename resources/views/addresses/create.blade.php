@@ -19,6 +19,8 @@
                         type="text"
                         id="address"
                         value="{{ old('address') }}"
+                        required
+                        maxlength="35"
                         class="form-input @error('address') error-input @enderror"
                     >
                     @error('address')
@@ -37,6 +39,7 @@
                         type="text"
                         id="address2"
                         value="{{ old('address2') }}"
+                        maxlength="20"
                         class="form-input @error('address2') error-input @enderror"
                     >
                     @error('address2')
@@ -55,6 +58,8 @@
                         type="text"
                         id="city"
                         value="{{ old('city') }}"
+                        required
+                        maxlength="25"
                         class="form-input @error('city') error-input @enderror"
                     >
                     @error('city')
@@ -73,6 +78,8 @@
                         type="text"
                         id="state"
                         value="{{ old('state') }}"
+                        required
+                        maxlength="2"
                         class="form-input @error('state') error-input @enderror"
                     >
                     @error('state')
@@ -91,6 +98,7 @@
                         type="text"
                         id="zip"
                         value="{{ old('zip') }}"
+                        maxlength="20"
                         class="form-input @error('zip') error-input @enderror"
                     >
                     @error('zip')

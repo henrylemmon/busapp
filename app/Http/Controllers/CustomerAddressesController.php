@@ -14,20 +14,20 @@ class CustomerAddressesController extends Controller
      * Display a listing of the resource.
      *
      * @param Customer $customer
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Customer $customer)
     {
         $addresses = $customer->addresses;
 
-        return view('addresses.index', compact('addresses'));
+        return view('addresses.index', compact('addresses', 'customer'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @param Customer $customer
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Customer $customer)
     {
@@ -38,7 +38,7 @@ class CustomerAddressesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Customer $customer
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Customer $customer)
     {
@@ -65,7 +65,7 @@ class CustomerAddressesController extends Controller
      *
      * @param Customer $customer
      * @param Address $address
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Customer $customer, Address $address)
     {
@@ -77,7 +77,7 @@ class CustomerAddressesController extends Controller
      *
      * @param Customer $customer
      * @param Address $address
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Customer $customer, Address $address)
     {
@@ -91,7 +91,7 @@ class CustomerAddressesController extends Controller
      *
      * @param Customer $customer
      * @param Address $address
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws Exception
      */
     public function destroy(Customer $customer, Address $address)
