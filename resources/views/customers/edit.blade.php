@@ -20,6 +20,8 @@
                         type="text"
                         id="first_name"
                         value="{{ old('first_name') ? old('first_name') : $customer->first_name }}"
+                        required
+                        maxlength="50"
                         class="form-input @error('first_name') error-input @enderror"
 
                     >
@@ -39,6 +41,8 @@
                         type="text"
                         id="last_name"
                         value="{{ old('last_name') ? old('last_name') : $customer->last_name }}"
+                        required
+                        maxlength="50"
                         class="form-input @error('last_name') error-input @enderror"
                     >
                     @error('last_name')
@@ -57,6 +61,8 @@
                         type="text"
                         id="telephone"
                         value="{{ old('telephone') ? old('telephone') : $customer->telephone }}"
+                        required
+                        maxlength="25"
                         class="form-input @error('telephone') error-input @enderror"
                     >
                     @error('telephone')
@@ -75,6 +81,7 @@
                         type="email"
                         id="email"
                         value="{{ old('email') ? old('email') : $customer->email }}"
+                        maxlength="50"
                         class="form-input @error('email') error-input @enderror"
                     >
                     @error('email')

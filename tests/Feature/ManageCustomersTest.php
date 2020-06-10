@@ -136,6 +136,9 @@ class ManageCustomersTest extends TestCase
 
         $this->signIn();
 
+        $this->get($customer->path().'/edit')
+            ->assertStatus(200);
+
         $this->followingRedirects()
             ->patch($customer->path(), $attributes = [
                 'first_name' => 'newFirst',
@@ -176,6 +179,8 @@ class ManageCustomersTest extends TestCase
         $this->assertDatabaseMissing('addresses', ['address' => $billingAddress->address]);
         $this->assertDatabaseMissing('addresses', ['address' => $jobAddress->address]);
     }
+
+    // create customer validation
 
     /** @test */
     public function a_customer_requires_a_first_name()
@@ -415,5 +420,119 @@ class ManageCustomersTest extends TestCase
 
         $this->post('/customers', $newCustomer)
             ->assertSessionHasErrors('zip');
+    }
+
+    // edit customer validation
+
+    /** @test */
+    public function to_edit_a_customer_requires_a_first_name()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'first_name' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('first_name');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_first_name_cannot_be_more_than_50_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'first_name' => 'llllllllllllllllllllllllllllllllllllllllllllllllllX'
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('first_name');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_a_customer_requires_a_last_name()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'last_name' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('last_name');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_last_name_cannot_be_more_than_50_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'last_name' => 'llllllllllllllllllllllllllllllllllllllllllllllllllX'
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('last_name');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_a_customer_requires_a_telephone()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'telephone' => ''
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('telephone');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_telephone_cannot_be_more_than_25_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'telephone' => 'llllllllllllllllllll00000X'
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('telephone');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_email_cannot_be_more_than_50_chars()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'email' => 'Xllllllll@lllllllllllllllllllllllllllllllllllll.com'
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('email');
+    }
+
+    /** @test */
+    public function to_edit_a_customer_email_must_be_formatted_as_an_email()
+    {
+        $customer = factory(Customer::class)->create();
+        $changedCustomer = factory(Customer::class)->raw([
+            'email' => 'henrylemmonicloud.com'
+        ]);
+
+        $this->signIn();
+
+        $this->patch($customer->path(), $changedCustomer)
+            ->assertSessionHasErrors('email');
     }
 }

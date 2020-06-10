@@ -12,7 +12,7 @@ class CustomersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class CustomersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class CustomersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -66,7 +66,7 @@ class CustomersController extends Controller
      * Display the specified resource.
      *
      * @param Customer $customer
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Customer $customer)
     {
@@ -77,7 +77,7 @@ class CustomersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Customer $customer
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Customer $customer)
     {
@@ -88,7 +88,7 @@ class CustomersController extends Controller
      * Update the specified resource in storage.
      *
      * @param Customer $customer
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Customer $customer)
     {
@@ -105,7 +105,7 @@ class CustomersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Customer $customer
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws Exception
      */
     public function destroy(Customer $customer)
