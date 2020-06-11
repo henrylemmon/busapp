@@ -30,6 +30,8 @@ Route::get('/customers/{customer}/invoices/create', 'InvoicesController@create')
 Route::get('/customers/{customer}/invoices/{invoice}', 'InvoicesController@show');
 Route::post('/customers/{customer}/invoices', 'InvoicesController@store');
 
+Route::get('/customers/{customer}/invoices/{invoice}/download', 'PDFController@create');
+
 Auth::routes();
 
 

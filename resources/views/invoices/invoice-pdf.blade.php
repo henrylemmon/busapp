@@ -9,12 +9,14 @@
     <!-- Styles -->
     <style>
         body {
-            /*background: #f4fcfc;*/
             background: #fff;
             position: relative;
         }
         table, th, td {
             border-collapse: collapse;
+        }
+        th {
+            font-family: sans-serif;
         }
         table {
             width:100%;
@@ -26,7 +28,7 @@
         }
         table.middle {
             position: absolute;
-            top: 220px;
+            top: 200px;
             left: 0px;
         }
         th.middle {
@@ -41,7 +43,7 @@
         table.main {
             border: 1px solid black;
             position: absolute;
-            top: 370px;
+            top: 350px;
             left: 0px;
         }
         th.main {
@@ -54,7 +56,7 @@
         }
         table.foot {
             position: absolute;
-            top: 908px;
+            top: 888px;
             left: 0px;
         }
         td.foot {
@@ -65,7 +67,7 @@
             width: 100%;
             height: 100%;
             position: absolute;
-            top: 350px;
+            top: 320px;
             left: -35px;
         }
         .logo {
@@ -89,20 +91,20 @@
         <td style="width:30%;height:175px;"></td>
         <td style="width:70%;text-align:center;padding-right:25px;">
             <div style="margin-bottom:10px;">
-                <h1 style="margin-top:15px;font-size:50px;">Joe's Plumbing</h1>
+                <h1 style="margin-top:15px;font-size:50px;font-family:sans-serif;">Joe's Plumbing</h1>
                 <p
                     style="font-size:10px;
                             font-variant:small-caps;
                             letter-spacing:4px;
                             margin-top:-35px;">
-                    &bull; ON TIME &bull; ON BUDGET &bull;
+                    &bull; NON LICENCED &bull; NO CONTRACT &bull;
                 </p>
             </div>
-            <p style="text-align:left;margin-left:115px;font-size:12px;font-family:sans-serif;">
+            {{--<p style="text-align:left;margin-left:115px;font-size:12px;font-family:sans-serif;">
                 1122 BoogieBoogie Ave.<br>
                 Long Angeles, CA.<br>
                 90802
-            </p>
+            </p>--}}
         </td>
     </tr>
 </table>
@@ -135,22 +137,29 @@
     </tr>
 
     <tr>
-        <td class="middle">Hank</td>
-        @isset($address)
-            <td class="middle">
-                Henry
-            </td>
-        @endisset
-        @empty($address)
-            <td class="middle">
-                Job Location
-            </td>
-        @endempty
         <td class="middle">
-            Billing Address
+            {{ $invoice->sales_person }}
         </td>
         <td class="middle">
-            The Date
+            {{ $invoice->customer->jobAddress($invoice->job_address_id)->address }}<br>
+            @isset($invoice->customer->jobAddress($invoice->job_address_id)->address2)
+                {{ $invoice->customer->jobAddress($invoice->job_address_id)->address2 }}<br>
+            @endisset
+            {{ $invoice->customer->jobAddress($invoice->job_address_id)->city }},
+            {{ $invoice->customer->jobAddress($invoice->job_address_id)->state }}.<br>
+            {{ $invoice->customer->jobAddress($invoice->job_address_id)->zip }}
+        </td>
+        <td class="middle">
+            {{ $invoice->customer->billingAddress()->address }}<br>
+            @isset($invoice->customer->billingAddress()->address2)
+                {{ $invoice->customer->billingAddress()->address2 }}<br>
+            @endisset
+            {{ $invoice->customer->billingAddress()->city }},
+            {{ $invoice->customer->billingAddress()->state }}.<br>
+            {{ $invoice->customer->billingAddress()->zip }}
+        </td>
+        <td class="middle">
+            {{ $invoice->billing_date }}
         </td>
     </tr>
 </table>
@@ -162,21 +171,23 @@
     </tr>
     <tr>
         <td class="main" style="height:500px;vertical-align:top;">
-            I am three rows high and I do not give a shit and I hope that you do not either and then again it is so fruitful but.
+            {!! $invoice->description !!}
         </td>
-        <td class="main" style="vertical-align:top;">
-            there wehre two rows below but now there is not I added an extra table to compensate.
+        <td class="main" style="height:500px;vertical-align:top;">
+            {!! $invoice->cost_description !!}
         </td>
     </tr>
 </table>
 
 <table class="foot">
     <tr>
-        <td rowspan="2" style="width:75%;text-align:center;">Thank You!</td>
-        <td class="foot" style="width:25%;font-weight:bold;">Total</td>
+        <td rowspan="2" style="width:75%;text-align:center;font-family:sans-serif;font-size:18px;">Thank You!</td>
+        <td class="foot" style="width:25%;font-weight:bold;font-family:sans-serif;">Total</td>
     </tr>
     <tr>
-        <td class="foot" style="height:20px;"></td>
+        <td class="foot" style="height:20px;">
+            {{ $invoice->total }}
+        </td>
     </tr>
 </table>
 

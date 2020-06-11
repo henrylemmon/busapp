@@ -14,7 +14,7 @@ class InvoicesController extends Controller
      * Display a listing of the resource.
      *
      * @param Customer $customer
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Customer $customer)
     {
@@ -25,7 +25,7 @@ class InvoicesController extends Controller
      * Show the form for creating a new resource.
      *
      * @param Customer $customer
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Customer $customer)
     {
@@ -37,7 +37,7 @@ class InvoicesController extends Controller
      *
      * @param Customer $customer
      * @param Address $address
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Customer $customer)
     {
@@ -74,17 +74,12 @@ class InvoicesController extends Controller
      *
      * @param Customer $customer
      * @param Invoice $invoice
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Customer $customer, Invoice $invoice)
     {
         return view('invoices.show', compact('invoice'));
     }
-
-/*$pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer', 'address'))
-->setPaper('letter', 'portrait');
-
-return $pdf->stream('invoice.pdf');*/
 
 /*$pdf = \PDF::loadView('invoices/invoice-pdf', compact('customer'))
 ->setPaper('letter', 'portrait');

@@ -182,7 +182,9 @@
 
                 <td class="middle">
                     {{ $invoice->customer->jobAddress($invoice->job_address_id)->address }}<br>
-                    {{ $invoice->customer->jobAddress($invoice->job_address_id)->address2 }}<br>
+                    @isset($invoice->customer->jobAddress($invoice->job_address_id)->address2)
+                        {{ $invoice->customer->jobAddress($invoice->job_address_id)->address2 }}<br>
+                    @endisset
                     {{ $invoice->customer->jobAddress($invoice->job_address_id)->city }},
                     {{ $invoice->customer->jobAddress($invoice->job_address_id)->state }}.<br>
                     {{ $invoice->customer->jobAddress($invoice->job_address_id)->zip }}
@@ -190,7 +192,9 @@
 
                 <td class="middle">
                     {{ $invoice->customer->billingAddress()->address }}<br>
-                    {{ $invoice->customer->billingAddress()->address2 }}<br>
+                    @isset($invoice->customer->billingAddress()->address2)
+                        {{ $invoice->customer->billingAddress()->address2 }}<br>
+                    @endisset
                     {{ $invoice->customer->billingAddress()->city }},
                     {{ $invoice->customer->billingAddress()->state }}.<br>
                     {{ $invoice->customer->billingAddress()->zip }}
@@ -232,13 +236,13 @@
             <tr>
                 <td>
                     <a
-                        href="#"
+                        href="{{ $invoice->path() . '/download' }}"
                         style="background:black;padding:5px 10px;color:white;text-decoration:none;"
-                    >Download</a>
+                    >Prepare for Download</a>
                 </td>
                 <td>
                     <a
-                        href="{{$invoice->customer->path() . '/invoices'}}"
+                        href="{{ $invoice->customer->path() . '/invoices' }}"
                         style="background:black;padding:5px 10px;color:white;text-decoration:none;"
                     >Cancel</a>
                 </td>
