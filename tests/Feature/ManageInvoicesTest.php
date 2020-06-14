@@ -107,4 +107,82 @@ class ManageInvoicesTest extends TestCase
             ->assertSee($invoice->description)
             ->assertSee($invoice->cost_descriiption);
     }
+
+    // Validation
+
+    /** @test */
+    public function it_must_have_a_sales_person()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $billingAddress = factory(Address::class)
+            ->states('isBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $invoiceAttributes = factory(Invoice::class)->raw([
+            'customer_id' => $customer->id,
+            'billing_address_id' => $billingAddress->id,
+            'job_address_id' => $jobAddress->id,
+            'sales_person' => ''
+        ]);
+
+        $this->post($customer->path().'/invoices', $invoiceAttributes)
+            ->assertSessionHasErrors('sales_person');
+    }
+
+    /** @test */
+    public function it_must_have_a_job_address()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $billingAddress = factory(Address::class)
+            ->states('isBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $invoiceAttributes = factory(Invoice::class)->raw([
+            'customer_id' => $customer->id,
+            'billing_address_id' => $billingAddress->id,
+            'job_address_id' => null
+        ]);
+
+        $this->post($customer->path().'/invoices', $invoiceAttributes)
+            ->assertSessionHasErrors('job_address_id');
+    }
+
+    /** @test */
+    public function it_must_have_a_billing_address()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $invoiceAttributes = factory(Invoice::class)->raw([
+            'customer_id' => $customer->id,
+            'billing_address_id' => null,
+            'job_address_id' => $jobAddress->id
+        ]);
+
+        $this->post($customer->path().'/invoices', $invoiceAttributes)
+            ->assertSessionHasErrors('billing_address_id');
+    }
 }

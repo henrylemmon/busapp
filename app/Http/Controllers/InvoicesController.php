@@ -41,17 +41,7 @@ class InvoicesController extends Controller
      */
     public function store(Customer $customer)
     {
-        $attributes = [
-            'billing_address_id' => $customer->billingAddress()->id,
-            'job_address_id' => request('job_address_id'),
-            'sales_person' => request('sales_person'),
-            'billing_date' => request('billing_date'),
-            'description' => request('description'),
-            'cost_description' => request('cost_description'),
-            'completed' => request('completed') ? true : false,
-            'paid' => request('paid') ? true : false,
-            'total' => request('total')
-        ];
+        $attributes = $this->validateRequest();
 
         $customer->invoices()->create($attributes);
 
@@ -118,5 +108,20 @@ return $pdf->stream('invoice.pdf');*/
     public function destroy(Invoice $invoice)
     {
         //
+    }
+
+    public function validateRequest()
+    {
+        return request()->validate([
+            'billing_address_id' => 'required',
+            'job_address_id' => 'required',
+            'sales_person' => 'required',
+            'billing_date' => 'nullable',
+            'description' => 'nullable',
+            'cost_description' => 'nullable',
+            'completed' => 'nullable',
+            'paid' => 'nullable',
+            'total' => 'nullable'
+        ]);
     }
 }

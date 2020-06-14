@@ -185,6 +185,7 @@
                         <input
                             name="sales_person"
                             type="text"
+                            @error('sales_person')style="border: 1px solid red;"@enderror
                         >
                     </td>
 
@@ -192,7 +193,7 @@
                         {{--begin of it--}}
                             <select
                                 name="job_address_id"
-                                style="padding:3px 2px;"
+                                style="padding:3px 2px;@error('job_address_id')color:red;@enderror"
                             >
                                 @if(isset($customer->billingAddress()->id))
                                     <option
@@ -242,7 +243,7 @@
                         </td>
                     @endisset
                     @empty($customer->billingAddress()->address)
-                        <td class="middle">
+                        <td class="middle" @error('billing_address_id')style="color:red;"@enderror>
                             Go back and assign a billing address!
                         </td>
                     @endempty

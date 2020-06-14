@@ -23,4 +23,9 @@ class Invoice extends Model
     {
         return "{$this->customer->path()}/invoices/{$this->id}";
     }
+
+    public function title()
+    {
+        return $this->customer->billingAddress();
+    }
 }

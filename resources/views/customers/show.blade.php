@@ -6,7 +6,7 @@
             <a
                 href="/customers"
                 class="underline text-blue-500"
-            >Customers</a> < {{ $customer->first_name . ' ' . $customer->last_name }}
+            >Customers</a> < {{ $customer->fullName() }}
         </div>
     </div>
 
@@ -15,7 +15,7 @@
 
             @isset($customer)
 
-                <div class="text-2xl mt-4 mb-0 font-bold">Customer Address</div>
+                <div class="text-2xl mt-4 mb-0 font-bold">Customer Information</div>
                 <hr class="border-gray-500">
                 <div class="mt-4">
                     {{ $customer->fullName() }}<br>
@@ -44,7 +44,7 @@
                 @endempty
 
                 @if ($customer->addresses->count() >= 1)
-                    <div class="text-2xl mt-4 mb-0 font-bold">Job Addresses</div>
+                    <div class="text-2xl mt-4 mb-0 font-bold">Customer Addresses</div>
                     <hr class="border-gray-500">
 
                     @foreach($customer->addresses as $address)
@@ -96,12 +96,12 @@
                 <a
                     href="{{ $customer->path() . '/addresses/create' }}"
                     class="button block text-center mt-4"
-                >Create Address</a>
+                >Create Customer Address</a>
 
                 <a
                     href="{{ $customer->path() . '/addresses' }}"
                     class="button block text-center mt-4"
-                >Edit or Delete Addresses</a>
+                >Edit or Delete Customer Addresses</a>
 
             </div>
 
@@ -109,14 +109,14 @@
                 <div class="text-2xl mt-8 mb-0 font-bold text-center">Manage Invoices</div>
                 <hr class="border-gray-500">
                 <a
-                    href="{{ $customer->path() . '/invoices' }}"
-                    class="button block text-center mt-4"
-                >View Customer Invoices</a>
-
-                <a
                     href="{{ $customer->path() . '/invoices/create' }}"
                     class="button block text-center mt-4"
                 >Create Customer Invoice</a>
+
+                <a
+                    href="{{ $customer->path() . '/invoices' }}"
+                    class="button block text-center mt-4"
+                >View Edit Delete Customer Invoices</a>
             </div>
         </div>
     </div>

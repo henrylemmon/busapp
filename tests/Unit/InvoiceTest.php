@@ -64,4 +64,34 @@ class InvoiceTest extends TestCase
 
         $this->assertEquals($customer->path() . '/invoices/' . $invoice->id, $invoice->path());
     }
+
+    /** @test */
+    public function it_has_a_title()
+    {
+        $customer = factory(Customer::class)->create();
+
+        $billingAddress = factory(Address::class)
+            ->states('isBillingAddress')
+            ->create([
+                'customer_id' => $customer->id,
+                'address' => '1122 Boogie Boogie Avenue'
+            ]);
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $invoice = factory(Invoice::class)->create([
+            'customer_id' => $customer->id,
+            'billing_address_id' => $billingAddress->id,
+            'job_address_id' => $jobAddress->id,
+        ]);
+
+        $this->assertEquals(
+            $invoice->customer->billingAddress()->address,
+            '1122 Boogie Boogie Avenue'
+        );
+    }
 }
