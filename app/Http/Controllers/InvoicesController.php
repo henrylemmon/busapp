@@ -121,7 +121,7 @@ return $pdf->stream('invoice.pdf');*/
             'cost_description' => 'nullable',
             'completed' => 'nullable',
             'paid' => 'nullable',
-            'total' => 'nullable'
+            'total' => 'string|nullable'
         ]);
     }
 }

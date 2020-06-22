@@ -12,9 +12,9 @@
         <div class="mx-auto mt-4">
             <a
                 href="{{ $invoice->path() }}"
-                class="underline text-blue-400 block"
+                class="text-blue-400 block"
             >
-                {{ $invoice->customer->fullName() . '_' . str_replace('-', '_', $invoice->created_at->toDateString()) }}
+                {{ $invoice->title($invoice->job_address_id) }}
             </a>
         </div>
     @empty

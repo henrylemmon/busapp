@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Address;
 use App\Invoice;
 use App\Customer;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -73,14 +74,14 @@ class InvoiceTest extends TestCase
         $billingAddress = factory(Address::class)
             ->states('isBillingAddress')
             ->create([
-                'customer_id' => $customer->id,
-                'address' => '1122 Boogie Boogie Avenue'
+                'customer_id' => $customer->id
             ]);
 
         $jobAddress = factory(Address::class)
             ->states('notBillingAddress')
             ->create([
-                'customer_id' => $customer->id
+                'customer_id' => $customer->id,
+                'address' => '1122 Boogie Boogie Avenue'
             ]);
 
         $invoice = factory(Invoice::class)->create([
@@ -89,9 +90,16 @@ class InvoiceTest extends TestCase
             'job_address_id' => $jobAddress->id,
         ]);
 
+        $createdAt = Carbon::create(strval($invoice->created_at));
+
+        $caption = strip_tags(implode(' ', array_slice(explode(' ', $invoice->description), 0, 6)));
+        $descriptionCaption = preg_replace('/\s/', '_', $caption);
+
         $this->assertEquals(
-            $invoice->customer->billingAddress()->address,
-            '1122 Boogie Boogie Avenue'
+            $invoice->title($jobAddress->id),
+            $createdAt->isoFormat('MMM_Do_YYYY')
+            . '_' . '1122_Boogie_Boogie_Avenue'
+            . '_' .$descriptionCaption
         );
     }
 }

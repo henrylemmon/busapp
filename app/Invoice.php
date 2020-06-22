@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Boolean;
 
@@ -24,8 +25,13 @@ class Invoice extends Model
         return "{$this->customer->path()}/invoices/{$this->id}";
     }
 
-    public function title()
+    public function title($id)
     {
-        return $this->customer->billingAddress();
+        $caption = strip_tags(implode(' ', array_slice(explode(' ', $this->description), 0, 6)));
+        $descriptionCaption = preg_replace('/\s/', '_', $caption);
+        $createdAt = Carbon::create(strval($this->created_at));
+        return $createdAt->isoFormat('MMM_Do_YYYY')
+            . '_' . str_replace(' ', '_', $this->customer->jobAddress($id)->address)
+            . '_' . $descriptionCaption;
     }
 }

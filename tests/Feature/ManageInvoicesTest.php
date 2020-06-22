@@ -16,6 +16,8 @@ class ManageInvoicesTest extends TestCase
     /** @test */
     public function a_user_can_create_a_invoice()
     {
+        /*$this->withoutExceptionHandling();*/
+
         $customer = factory(Customer::class)->create();
 
         $billingAddress = factory(Address::class)
@@ -31,6 +33,7 @@ class ManageInvoicesTest extends TestCase
             ]);
 
         $this->post($customer->path() . '/invoices', $attributes = [
+            'billing_address_id' => $billingAddress->id,
             'job_address_id' => $jobAddress->id,
             'sales_person' => 'Henry Lemmon',
             'billing_date' => '05/01/2019',
@@ -63,7 +66,7 @@ class ManageInvoicesTest extends TestCase
                 'customer_id' => $customer->id
             ]);
 
-        $invoices = factory(Invoice::class, 3)->create([
+        $invoice = factory(Invoice::class)->create([
             'customer_id' => $customer->id,
             'billing_address_id' => $billingAddress->id,
             'job_address_id' => $jobAddress->id,
@@ -71,11 +74,7 @@ class ManageInvoicesTest extends TestCase
 
         $this->get($customer->path() . '/invoices')
             ->assertSee(
-                $invoices[0]->customer->fullName() . '_' . str_replace('-', '_', $invoices[0]->created_at->toDateString())
-            )->assertSee(
-                $invoices[1]->customer->fullName() . '_' . str_replace('-', '_', $invoices[1]->created_at->toDateString())
-            )->assertSee(
-                $invoices[2]->customer->fullName() . '_' . str_replace('-', '_', $invoices[2]->created_at->toDateString())
+                $invoice->title($jobAddress->id)
             );
     }
 
