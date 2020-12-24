@@ -20,6 +20,11 @@ class Invoice extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function jobAddress()
+    {
+        return $this->customer()->jobAddress();
+    }
+
     public function path()
     {
         return "{$this->customer->path()}/invoices/{$this->id}";

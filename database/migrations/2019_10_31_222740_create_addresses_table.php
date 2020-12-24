@@ -20,7 +20,7 @@ class CreateAddressesTable extends Migration
             $table->string('address', 35);
             $table->string('address2', 20)->nullable();
             $table->string('city', 25);
-            $table->string('state', 25);
+            $table->string('state', 2);
             $table->string('zip', 20)->nullable();
             $table->timestamps();
 

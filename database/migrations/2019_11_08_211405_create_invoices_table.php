@@ -22,14 +22,14 @@ class CreateInvoicesTable extends Migration
             $table->string('billing_date', 15);
             $table->text('description');
             $table->text('cost_description');
-            $table->string('total', 10);
             $table->boolean('completed');
             $table->boolean('paid');
+            $table->string('total', 10);
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('billing_address_id')->references('id')->on('addresses')->onDelete('cascade');
-            $table->foreign('job_address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('billing_address_id')->references('id')->on('addresses');
+            $table->foreign('job_address_id')->references('id')->on('addresses');
         });
     }
 

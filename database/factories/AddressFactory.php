@@ -8,10 +8,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Address::class, function (Faker $faker) {
     return [
-        /*'customer_id' => function () {
-            return factory(Customer::class)->create()->id;
-        },*/
-        /*'billing_address' => false,*/
         'address' => $faker->buildingNumber . ' ' . $faker->streetName,
         'address2' => $faker->secondaryAddress,
         'city' => $faker->city,

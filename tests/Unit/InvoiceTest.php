@@ -102,4 +102,33 @@ class InvoiceTest extends TestCase
             . '_' .$descriptionCaption
         );
     }
+
+    /** @test */
+    public function it_has_a_job_address()
+    {
+        $this->withoutExceptionHandling();
+
+        $customer = factory(Customer::class)->create();
+
+        $billingAddress = factory(Address::class)
+            ->states('isBillingAddress')
+            ->create([
+                'customer_id' => $customer->id
+            ]);
+
+        $jobAddress = factory(Address::class)
+            ->states('notBillingAddress')
+            ->create([
+                'customer_id' => $customer->id,
+                'address' => '1122 Boogie Boogie Avenue'
+            ]);
+
+        $invoice = factory(Invoice::class)->create([
+            'customer_id' => $customer->id,
+            'billing_address_id' => $billingAddress->id,
+            'job_address_id' => $jobAddress->id,
+        ]);
+
+        $this->assertEquals($invoice->jobAddress(), $jobAddress);
+    }
 }
